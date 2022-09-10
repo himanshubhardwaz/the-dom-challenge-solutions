@@ -9,6 +9,8 @@ function PixelArt(el, rows, cols) {
 
   let selected = {};
 
+  let isMouseDown = false;
+
   const element = document.querySelector(el);
 
   const fragment = document.createDocumentFragment();
@@ -36,16 +38,12 @@ function PixelArt(el, rows, cols) {
   element.appendChild(fragment);
 
   element.addEventListener('click', onClick);
+  element.addEventListener('mousedown', onMouseDown);
+  element.addEventListener('mouseup', onMouseUp);
+  element.addEventListener('mousemove', onMouseMove);
 
-  function onClick(event) {
-    const row = event.target.dataset.row;
-    const col = event.target.dataset.col;
-
-    if (!row || !col) {
-      return
-    }
-
-    if (selected[`${row}-${col}`]) {
+  function toggleSelect(row, col, toggleEnabled = true) {
+    if (selected[`${row}-${col}`] && toggleEnabled) {
       for (let i = 1; i <= rows; i++) {
         for (let j = 1; j <= cols; j++) {
           if (i === Number(row) && j === Number(col)) {
@@ -66,7 +64,40 @@ function PixelArt(el, rows, cols) {
         }
       }
     }
-
-    console.log({ selected });
   }
+
+  function onMouseMove(event) {
+    console.log({ isMouseDown })
+    if (isMouseDown) {
+      const row = event.target.dataset.row;
+      const col = event.target.dataset.col;
+
+      if (!row || !col) {
+        return
+      }
+
+      toggleSelect(row, col, false);
+    }
+  }
+
+  function onClick(event) {
+    const row = event.target.dataset.row;
+    const col = event.target.dataset.col;
+
+    if (!row || !col) {
+      return
+    }
+
+    toggleSelect(row, col);
+  }
+
+  function onMouseDown() {
+    isMouseDown = true;
+  }
+
+  function onMouseUp() {
+    isMouseDown = false;
+  }
+
+
 }
