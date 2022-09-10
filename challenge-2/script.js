@@ -7,6 +7,8 @@
 function PixelArt(el, rows, cols) {
   // write logic to create pixel art grid.
 
+  let selected = {};
+
   const element = document.querySelector(el);
 
   const fragment = document.createDocumentFragment();
@@ -39,21 +41,32 @@ function PixelArt(el, rows, cols) {
     const row = event.target.dataset.row;
     const col = event.target.dataset.col;
 
-    console.log({ row, col });
-
     if (!row || !col) {
       return
     }
 
-    for (let i = 1; i <= rows; i++) {
-      for (let j = 1; j <= cols; j++) {
-        if (i === Number(row) && j === Number(col)) {
-          element.children[i - 1].children[j - 1].classList.add('selected');
-        }
-        else {
-          element.children[i - 1].children[j - 1].classList.remove('selected');
+    if (selected[`${row}-${col}`]) {
+      for (let i = 1; i <= rows; i++) {
+        for (let j = 1; j <= cols; j++) {
+          if (i === Number(row) && j === Number(col)) {
+            element.children[i - 1].children[j - 1].classList.remove('selected');
+            selected[`${row}-${col}`] = false;
+          }
         }
       }
     }
+
+    else {
+      for (let i = 1; i <= rows; i++) {
+        for (let j = 1; j <= cols; j++) {
+          if (i === Number(row) && j === Number(col)) {
+            element.children[i - 1].children[j - 1].classList.add('selected');
+            selected[`${row}-${col}`] = true;
+          }
+        }
+      }
+    }
+
+    console.log({ selected });
   }
 }
