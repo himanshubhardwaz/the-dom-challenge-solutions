@@ -1,3 +1,15 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.fa {
+  font-size: 40px;
+}
+
 .fa-star-o:before {
   content: "\f006";
   color: #5f6368;
