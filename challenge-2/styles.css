@@ -1,0 +1,25 @@
+#grid {
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  height: 100vh;
+  width: 100vw;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  height: 8vh;
+  width: 80vw;
+  border: 1px solid black;
+}
+
+.row-children {
+  border: 1px solid black;
+  height: 100%;
+  width: 10vw;
+}
+
+.selected {
+ background: red;
+}
